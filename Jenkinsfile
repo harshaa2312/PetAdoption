@@ -1,17 +1,22 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "pet_adoption_app"
+        CONTAINER_NAME = "pet_adoption_container"
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/harshaa2312/PetAdoption.git'
+                git branch: 'main', url: 'https://github.com/harshaa2312/PetAdoption.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build('pet_adoption_app')
+                    sh "docker build -t $IMAGE_NAME ."
                 }
             }
         }
@@ -19,7 +24,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    dockerImage.run('-p 5000:5000')
+                    sh "docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME"
                 }
             }
         }
