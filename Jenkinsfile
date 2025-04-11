@@ -14,15 +14,11 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            agent {
-                docker {
-                    image 'docker:24.0.2-dind'
-                    args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
-                sh 'docker version'
-                sh 'docker build -t $IMAGE_NAME .'
+                script {
+                    sh 'docker version'
+                    sh "docker build -t $IMAGE_NAME ."
+                }
             }
         }
 
