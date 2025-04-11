@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Pets</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 30px;
+            margin: 0;
+            background: linear-gradient(to right, #fdfbfb, #ebedee);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            margin-bottom: 30px;
+        }
+
+        .search-box input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-box button:hover {
+            background-color: #574fe1;
+        }
+
+        .pet-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .pet-card {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            width: 260px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .pet-card:hover {
+            transform: scale(1.03);
+        }
+
+        img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .adopt-button {
+            margin-top: 12px;
+            padding: 10px 20px;
+            background-color: #ff7f50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .adopt-button:hover {
+            background-color: #e46b3c;
+        }
+
+        .pet-card h3 {
+            margin: 8px 0;
+            color: #444;
+        }
+
+        .pet-card p {
+            margin: 4px 0;
+            color: #666;
+        }
+
+        .back-button {
+            margin-top: 40px;
+            padding: 10px 20px;
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #574fe1;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Available Pets for Adoption</h1>
+
+    <form class="search-box" action="{{ url_for('available_pets') }}" method="get">
+        <input type="text" name="breed" placeholder="Search by breed..." value="{{ request.args.get('breed', '') }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="pet-container">
+        {% for pet in pets %}
+        <div class="pet-card">
+            <p><strong>ID:</strong> {{ pet[0] }}</p>
+            <img src="{{ url_for('static', filename='uploads/' + (pet[5] if pet[5] else 'default.jpg')) }}" alt="Pet Image">
+            <h3>{{ pet[1] }}</h3>
+            <p><strong>Breed:</strong> {{ pet[2] }}</p>
+            <p><strong>Age:</strong> {{ pet[3] }} years</p>
+            <form action="{{ url_for('adopt_pet', pet_id=pet[0]) }}" method="get">
+                <button type="submit" class="adopt-button">Adopt</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('user_dashboard') }}" class="back-button">← Back to Dashboard</a>
+
+</body>
+</html>

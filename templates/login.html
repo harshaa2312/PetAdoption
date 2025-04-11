@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- External CSS file (optional if you want to move styles out later) -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(-45deg, #fceabb, #f8b500, #e0c3fc, #8ec5fc);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group i {
+            margin-right: 10px;
+            color: #555;
+            min-width: 20px;
+        }
+
+        input, select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f8b500;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #f0a100;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .register-link a {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        #register-form {
+            display: none;
+            margin-top: 30px;
+        }
+
+        #register-form h2 {
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        function toggleRegister() {
+            document.getElementById("register-form").style.display = "block";
+        }
+
+        function registerUser() {
+            const email = document.getElementById("reg_email").value;
+            const password = document.getElementById("reg_password").value;
+
+            fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `email=${email}&password=${password}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Registration successful! Please log in.");
+                    document.getElementById("register-form").style.display = "none";
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-paw"></i> Login</h1>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <form action="/" method="POST">
+            <div class="form-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-user-tag"></i>
+                <select name="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </form>
+
+        <div class="register-link">
+            <a href="#" onclick="toggleRegister()">New User? Register</a>
+        </div>
+
+        <div id="register-form">
+            <h2><i class="fas fa-user-plus"></i> Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="reg_email" placeholder="Email" required>
+                </div>
+
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="reg_password" placeholder="Password" required>
+                </div>
+
+                <button type="button" onclick="registerUser()"><i class="fas fa-user-check"></i> Register</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

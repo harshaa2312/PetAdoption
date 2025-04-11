@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Pet</title>
+    <style>
+        form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        input[disabled] {
+            background-color: #e9e9e9;
+        }
+        h2 {
+            text-align: center;
+        }
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Pet Details</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Pet ID:</label>
+        <input type="text" value="{{ pet.id }}" disabled>
+
+        <label>Pet Name:</label>
+        <input type="text" name="name" value="{{ pet.name }}" required>
+
+        <label>Breed:</label>
+        <input type="text" name="breed" value="{{ pet.breed }}" required>
+
+        <label>Age:</label>
+        <input type="number" name="age" value="{{ pet.age }}" required>
+
+        <label>Upload New Image (optional):</label>
+        <input type="file" name="image">
+
+        <button type="submit">Update Pet</button>
+    </form>
+
+    <a href="{{ url_for('manage_pets') }}" class="back">← Back to Manage Pets</a>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+    <meta http-equiv="refresh" content="3;url={{ url_for('user_dashboard') }}">
+    <style>
+        body { font-family: Arial; text-align: center; padding-top: 50px; }
+        .message { font-size: 20px; color: green; }
+    </style>
+</head>
+<body>
+    <div class="message">
+        {{ get_flashed_messages()[0] }}
+    </div>
+    <p>You will be redirected shortly...</p>
+</body>
+</html>

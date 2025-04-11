@@ -1,0 +1,39 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User Email</th>
+            <th>Pet Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in requests %}
+        <tr>
+            <td>{{ request['id'] }}</td>
+            <td>
+                <a href="{{ url_for('view_adoption_form', user_email=request['user_email'], pet_id=request['pet_id']) }}">
+                    {{ request['user_email'] }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_for('view_adoption_form', user_email=request['user_email'], pet_id=request['pet_id']) }}">
+                    {{ request['pet_name'] }}
+                </a>
+            </td>
+            <td>{{ request['status'] }}</td>
+            <td>
+                <form action="{{ url_for('update_request', request_id=request['id']) }}" method="POST">
+                    <button name="action" value="Approved">Approve</button>
+                    <button name="action" value="Rejected">Reject</button>
+                </form>
+            </td>
+       
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+
+

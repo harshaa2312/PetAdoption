@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adoption Requests</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fff8fb, #fce4ec);
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto 40px;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+
+        th {
+            background-color: #ffc2d8;
+            color: #333;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        tr:hover {
+            background-color: #fff0f5;
+        }
+
+        button {
+            padding: 8px 14px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 2px;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-btn {
+            background-color: #6a5acd;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background-color: #5a4ac7;
+        }
+
+        .approve-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background-color: #45a049;
+        }
+
+        .reject-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background-color: #d7372b;
+        }
+
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 40px;
+            padding: 10px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Adoption Requests</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>User Email</th>
+            <th>Pet ID</th>
+            <th>Status</th>
+            <th>View Details</th>
+            <th>Actions</th>
+        </tr>
+        {% for request in adoption_requests %}
+        <tr>
+            <td>{{ request.id }}</td>
+            <td>{{ request.user_email }}</td>
+            <td>{{ request.pet_id }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                <a href="{{ url_for('view_adoption_request', request_id=request.id) }}">
+                    <button class="view-btn">View Details</button>
+                </a>
+            </td>
+            <td>
+                {% if request.status == 'Pending' %}
+                    <form action="/approve_request/{{ request.id }}" method="POST">
+                        <button type="submit" class="approve-btn">Approve ✅</button>
+                    </form>
+                    <form action="/reject_request/{{ request.id }}" method="POST">
+                        <button type="submit" class="reject-btn">Reject ❌</button>
+                    </form>
+                {% else %}
+                    {{ request.status }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">⬅ Back to Dashboard</a>
+
+</body>
+</html>

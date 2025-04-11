@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adoption Request Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fffafc, #ffeef5);
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .details-card {
+            width: 70%;
+            max-width: 700px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding: 10px 14px;
+            background-color: #fff0f5;
+            border-left: 5px solid #ffb6c1;
+            border-radius: 8px;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            font-size: 16px;
+            color: #777;
+            font-style: italic;
+        }
+
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 0;
+            padding: 10px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Adoption Request Details</h2>
+
+    <div class="details-card">
+        <ul>
+            <li><strong>ID:</strong> {{ request_data.id }}</li>
+            <li><strong>User Email:</strong> {{ request_data.user_email }}</li>
+            <li><strong>Pet ID:</strong> {{ request_data.pet_id }}</li>
+            <li><strong>Status:</strong> {{ request_data.status }}</li>
+        </ul>
+    </div>
+
+    {% if form_data %}
+        <h3>User's Submitted Info</h3>
+        <div class="details-card">
+            <ul>
+                <li><strong>Name:</strong> {{ form_data.name }}</li>
+                <li><strong>Address:</strong> {{ form_data.address }}</li>
+                <li><strong>Phone:</strong> {{ form_data.phone }}</li>
+                <li><strong>Reason for Adoption:</strong> {{ form_data.reason }}</li>
+            </ul>
+        </div>
+    {% else %}
+        <p><em>No additional form details found.</em></p>
+    {% endif %}
+
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">⬅ Back to Dashboard</a>
+
+</body>
+</html>

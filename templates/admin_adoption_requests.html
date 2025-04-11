@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adoption Requests</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fffafc, #ffeef5);
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 40px;
+        }
+
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #ffbfd8;
+            color: #444;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #fff0f5;
+        }
+
+        a {
+            color: #ff4081;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Adoption Requests</h2>
+    <table>
+        <tr>
+            <th>Request ID</th>
+            <th>User Email</th>
+            <th>Pet ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        {% for req in requests %}
+        <tr>
+            <td>{{ req[0] }}</td>
+            <td>{{ req[1] }}</td>
+            <td>
+                <a href="{{ url_for('view_pet_details', pet_id=req[2]) }}">
+                    {{ req[2] }}
+                </a>
+            </td>
+            <td>{{ req[3] }}</td>
+            <td>
+                <a href="{{ url_for('view_adoption_form', user_email=req[1], pet_id=req[2]) }}">
+                    View Form
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

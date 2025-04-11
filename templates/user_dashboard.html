@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-box {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            background: #6a11cb;
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+
+        .flash.success {
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-box">
+        <h2><i class="fas fa-user-circle icon"></i>Welcome, {{ user_email }}</h2>
+        <a class="btn" href="{{ url_for('available_pets') }}">
+            <i class="fas fa-dog icon"></i>View Available Pets
+        </a>
+        <a class="btn" href="{{ url_for('logout') }}">
+            <i class="fas fa-sign-out-alt icon"></i>Logout
+        </a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <h1>Welcome, Admin 🛠️</h1>
+        <div class="dashboard-cards">
+            <a href="{{ url_for('manage_pets') }}" class="dashboard-card">
+                <i class="fas fa-dog"></i>
+                <span>Manage Pets</span>
+            </a>
+            <a href="{{ url_for('adoption_requests') }}" class="dashboard-card">
+                <i class="fas fa-file-alt"></i>
+                <span>Adoption Requests</span>
+            </a>
+        </div>
+    </div>
+
+    <ul class="background-animation">
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+    </ul>
+</body>
+</html>
