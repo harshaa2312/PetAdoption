@@ -24,7 +24,11 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh "docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME"
+                    sh """
+                        docker stop $CONTAINER_NAME || true
+                        docker rm $CONTAINER_NAME || true
+                        docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME
+                    """
                 }
             }
         }
