@@ -7,6 +7,12 @@ pipeline {
     }
 
     stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/harshaa2312/PetAdoption.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
