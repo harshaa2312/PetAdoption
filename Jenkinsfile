@@ -7,7 +7,11 @@ pipeline {
     }
 
     stages {
-      
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/harshaa2312/PetAdoption.git'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -20,11 +24,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh """
-                        docker stop $CONTAINER_NAME || true
-                        docker rm $CONTAINER_NAME || true
-                        docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME
-                    """
+                    sh "docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME"
                 }
             }
         }
