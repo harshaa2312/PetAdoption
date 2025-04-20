@@ -1,18 +1,14 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
-import os  # 🔥 NEW
+import os  
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask import flash
-
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename 
- # 🔥 NEW
-
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 bcrypt = Bcrypt(app)
 
-# 🔥 NEW: Set up image upload folder
 UPLOAD_FOLDER = os.path.join("static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -144,23 +140,49 @@ def delete_pet(pet_id):
     return redirect(url_for('manage_pets'))
 
 
-@app.route("/update_pet/<int:pet_id>", methods=["POST"])
-def update_pet(pet_id):
-    if session.get("role") != "admin":
-        return redirect("/")
+# Edit Pet - Show form and update pet
+@app.route('/edit_pet/<int:pet_id>', methods=['GET', 'POST'])
+def edit_pet(pet_id):
+    conn = sqlite3.connect('instance/user.db')
+    c = conn.cursor()
 
-    name = request.form["name"]
-    breed = request.form["breed"]
-    age = request.form["age"]
+    if request.method == 'POST':
+        # Get updated data from form
+        name = request.form['name']
+        breed = request.form['breed']
+        age = request.form['age']
+        image_file = request.files['image']
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE pets SET name = ?, breed = ?, age = ? WHERE id = ?",
-                   (name, breed, age, pet_id))
-    conn.commit()
-    conn.close()
+        # If user uploaded a new image
+        if image_file and image_file.filename != '':
+            image_filename = image_file.filename
+            image_path = os.path.join('static/uploads', image_filename)
+            image_file.save(image_path)
 
-    return redirect("/manage_pets")
+            # Update all fields including image
+            c.execute('UPDATE pets SET name=?, breed=?, age=?, image=? WHERE id=?',
+                      (name, breed, age, image_filename, pet_id))
+        else:
+            # Update without changing the image
+            c.execute('UPDATE pets SET name=?, breed=?, age=? WHERE id=?',
+                      (name, breed, age, pet_id))
+
+        conn.commit()
+        conn.close()
+        flash('Pet updated successfully!', 'success')
+        return redirect(url_for('manage_pets'))
+    else:
+        # Fetch pet details to pre-fill the form
+        c.execute('SELECT * FROM pets WHERE id=?', (pet_id,))
+        pet = c.fetchone()
+        conn.close()
+
+        if pet:
+            return render_template('edit_pet.html', pet=pet)
+        else:
+            flash('Pet not found!', 'error')
+            return redirect(url_for('manage_pets'))
+
 
 @app.route("/manage_adoptions")
 def manage_adoptions():
