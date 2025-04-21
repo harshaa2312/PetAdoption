@@ -1,0 +1,9 @@
+[13572:17308:0421/203002.671:INFO:chrome_browser_cloud_management_controller.cc(202)] No machine level policy manager exists.
+[14588:8956:0421/203002.896:VERBOSE1:viz_main_impl.cc(85)] VizNullHypothesis is disabled (not a warning)
+[14056:640:0421/203002.937:INFO:cpu_info.cc(53)] Available number of cores: 4
+[6608:15112:0421/203003.388:INFO:cpu_info.cc(53)] Available number of cores: 4
+[17128:8076:0421/203003.665:INFO:cpu_info.cc(53)] Available number of cores: 4
+[13572:17308:0421/203003.734:INFO:CONSOLE(0)] "[DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o", source: http://127.0.0.1:5000/ (0)
+[13572:17308:0421/203003.734:INFO:CONSOLE(0)] "[DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o", source: http://127.0.0.1:5000/ (0)
+[13572:17308:0421/203013.800:WARNING:controller_impl.cc(1187)] Background download complete, client: 6, completion type: 0, file size:5152
+[19068:10176:0421/203029.007:INFO:child_thread_impl.cc(973)] ChildThreadImpl::EnsureConnected()
